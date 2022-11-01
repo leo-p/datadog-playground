@@ -1,0 +1,48 @@
+version: "3"
+services:
+  hello-python:
+    image: leopaillier/hello-python:1.0
+    command: ddtrace-run python app.py
+    ports:
+      - "5000:5000"
+    environment:
+      - DD_SERVICE=hello-python
+      - DD_ENV=prod
+      - DD_LOGS_INJECTION=true
+      - DD_AGENT_HOST=datadog
+    labels:
+      com.datadoghq.tags.env: 'prod'
+      com.datadoghq.tags.service: 'hello-python'
+      com.datadoghq.tags.version: '1.0'
+    depends_on:
+      - datadog
+  hello-node:
+    image: leopaillier/hello-node:1.0
+    ports:
+      - "5001:5001"
+    environment:
+      - DD_SERVICE=hello-node
+      - DD_ENV=prod
+      - DD_LOGS_INJECTION=true
+      - DD_AGENT_HOST=datadog
+    labels:
+      com.datadoghq.tags.env: 'prod'
+      com.datadoghq.tags.service: 'hello-node'
+      com.datadoghq.tags.version: '1.0'
+    depends_on:
+      - datadog
+  datadog:
+    image: datadog/agent:latest
+    ports:
+      - "8126:8126"
+    environment:
+      - DD_API_KEY
+      - DD_LOGS_ENABLED=true
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+      - DD_PROCESS_AGENT_ENABLED=true
+      - DD_TAGS='env:prod'
+      - DD_HOSTNAME=dd-docker-compose-host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
