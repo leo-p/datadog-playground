@@ -8,7 +8,7 @@ First, install the agent on your host following the [instructions](https://app.d
 
 Open a new terminal:
 ```shell
-$ cd ./0-app/hello-node
+$ cd 0-app/hello-node
 $ npm install --save dd-trace
 $ DD_ENV="prod"
 $ DD_LOGS_INJECTION=true
@@ -21,7 +21,7 @@ Go to the webpage and you should see `Hello from Node.js!`.
 
 Open a new terminal:
 ```shell
-$ cd ./0-app/hello-python
+$ cd 0-app/hello-python
 $ pip3 install ddtrace
 $ pip3 install flask
 $ DD_SERVICE="hello-python"
