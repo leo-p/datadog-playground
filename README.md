@@ -18,10 +18,16 @@ We go through 3 deployments types:
 The applications are build locally using Docker then made available on the DockerHub registry. You might want to update your username in the following commands.
 
 ```shell
-# Build the node app
+# Build the node app with tracer
 $ docker build --no-cache --tag hello-node ./0-app/hello-node
 $ docker tag hello-node leopaillier/hello-node:1.0
 $ docker push leopaillier/hello-node:1.0
+
+# Build the node app without tracer
+$ docker build --no-cache --tag hello-node-no-tracer ./0-app/hello-node-no-tracer
+$ docker tag hello-node leopaillier/hello-node-no-tracer:1.0
+$ docker push leopaillier/hello-node-no-tracer:1.0
+
 # Build the python app
 $ docker build --no-cache --tag hello-python ./0-app/hello-python
 $ docker tag hello-python leopaillier/hello-python:1.0
