@@ -1,5 +1,4 @@
 FROM node
-ENV NODE_ENV=production
 
 WORKDIR /app
 
