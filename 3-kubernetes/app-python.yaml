@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-python
+  labels:
+    tags.datadoghq.com/env: "prod"
+    tags.datadoghq.com/service: "hello-python"
+    tags.datadoghq.com/version: "1.0"
+    app: hello-python
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-python
+  template:
+    metadata:
+      labels:
+        tags.datadoghq.com/env: "prod"
+        tags.datadoghq.com/service: "hello-python"
+        tags.datadoghq.com/version: "1.0"
+        app: hello-python
+    spec:
+      containers:
+        - name: hello-python
+          image: leopaillier/hello-python:1.0
+          command: ["ddtrace-run"]
+          args: ["python", "app.py"]
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 5000
+          env:
+            - name: DD_ENV
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['tags.datadoghq.com/env']
+            - name: DD_SERVICE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['tags.datadoghq.com/service']
+            - name: DD_VERSION
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['tags.datadoghq.com/version']
+            - name: DD_LOGS_INJECTION
+              value: "true"
+            - name: DD_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-python
+spec:
+  selector:
+    app: hello-python
+  ports:
+  - port: 5000
+    protocol: TCP
+    targetPort: 5000

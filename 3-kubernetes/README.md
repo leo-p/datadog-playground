@@ -9,6 +9,7 @@ Please make sure to build the Docker images following the instructions in the pr
 Create a minikube cluster.
 ```shell
 $ minikube start
+$ minikube addons enable metrics-server
 ```
 
 ## Deploy Datadog Agent
@@ -19,15 +20,19 @@ $ cd 3-kubernetes
 $ export DD_API_KEY=<YOUR_DD_API_KEY>
 $ helm repo add datadog https://helm.datadoghq.com
 $ helm repo update
-$ helm install datadog-agent -f datadog-values.yaml --set datadog.site='datadoghq.com' --set datadog.apiKey=$DD_API_KEY datadog/datadog
+$ helm install datadog -f values.yaml --set datadog.site='datadoghq.com' --set datadog.apiKey=$DD_API_KEY datadog/datadog
 ```
 
-## Deploy the app
+## Deploy the apps
+
 ```shell
-$ minikube kubectl -- create namespace my-namespace
-$ minikube kubectl -- apply -n my-namespace -f app.yaml
-$ minikube service -n my-namespace my-service --url
+$ minikube kubectl -- apply -f app-python.yaml
+$ minikube kubectl -- apply -f app-node.yaml
+$ # Run each port-forward command in a new terminal
+$ kubectl port-forward svc/hello-python 5000:5000
+$ kubectl port-forward svc/hello-node 5001:5001
 ```
 
 ## Check traces
+
 Go to the Datadog [live traces](https://app.datadoghq.com/apm/traces) page and make sure traces from both your Node.js and Python apps are present.

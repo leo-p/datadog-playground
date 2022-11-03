@@ -1,0 +1,9 @@
+targetSystem: "linux"
+datadog:
+  logs:
+    enabled: true
+    containerCollectAll: true
+  kubelet:
+    tlsVerify: false
+  apm:
+    portEnabled: true
