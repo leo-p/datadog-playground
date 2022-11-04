@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-node-no-tracer
+  labels:
+    tags.datadoghq.com/env: "prod"
+    tags.datadoghq.com/service: "hello-node-no-tracer"
+    tags.datadoghq.com/version: "1.0"
+    app: hello-node-no-tracer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-node-no-tracer
+  template:
+    metadata:
+      labels:
+        tags.datadoghq.com/env: "prod"
+        tags.datadoghq.com/service: "hello-node-no-tracer"
+        tags.datadoghq.com/version: "1.0"
+        app: hello-node-no-tracer
+        admission.datadoghq.com/enabled: "true"
+        admission.datadoghq.com/js-lib.version: "latest"
+    spec:
+      containers:
+        - name: hello-node-no-tracer
+          image: leopaillier/hello-node-no-tracer:1.0
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 5001
+          env:
+            - name: DD_ENV
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['tags.datadoghq.com/env']
+            - name: DD_SERVICE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['tags.datadoghq.com/service']
+            - name: DD_VERSION
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['tags.datadoghq.com/version']
+            - name: DD_LOGS_INJECTION
+              value: "true"
+            - name: DD_AGENT_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-node-no-tracer
+spec:
+  selector:
+    app: hello-node-no-tracer
+  ports:
+  - port: 5001
+    protocol: TCP
+    targetPort: 5001
