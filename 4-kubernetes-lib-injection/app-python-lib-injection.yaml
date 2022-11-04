@@ -20,6 +20,7 @@ spec:
         tags.datadoghq.com/version: "1.0"
         app: hello-python-no-tracer
         admission.datadoghq.com/enabled: "true"
+      annotations:
         admission.datadoghq.com/python-lib.version: "latest"
     spec:
       containers:
