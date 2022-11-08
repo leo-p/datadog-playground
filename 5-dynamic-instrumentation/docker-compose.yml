@@ -1,0 +1,35 @@
+version: "3"
+services:
+  hello-python:
+    image: leopaillier/hello-python-with-random-error:1.0
+    command: ddtrace-run python app.py
+    ports:
+      - "5000:5000"
+    environment:
+      - DD_ENV=prod
+      - DD_SERVICE=hello-python-with-random-error-2
+      - DD_VERSION=1.0
+      - DD_LOGS_INJECTION=true
+      - DD_AGENT_HOST=datadog
+      # - DD_TAGS=git.commit.sha:7d84f1567435b8fc3dac1b0a5747e8e5619b9e61 git.repository_url:github.com/leo-p/datadog-playground
+    labels:
+      com.datadoghq.tags.env: 'prod'
+      com.datadoghq.tags.service: 'hello-python-with-random-error-2'
+      com.datadoghq.tags.version: '1.0'
+    depends_on:
+      - datadog
+  datadog:
+    image: datadog/agent:latest
+    ports:
+      - "8126:8126"
+    environment:
+      - DD_API_KEY
+      - DD_LOGS_ENABLED=true
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+      - DD_PROCESS_AGENT_ENABLED=true
+      - DD_TAGS='env:prod'
+      - DD_HOSTNAME=dd-docker-compose-host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
