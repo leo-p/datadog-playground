@@ -1,4 +1,4 @@
-# Docker-compose
+# Dynamic Instrumentation
 
 ## Build the apps
 
