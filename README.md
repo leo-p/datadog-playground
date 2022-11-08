@@ -1,4 +1,4 @@
-# Datadog Admission Controller
+# Datadog Playground
 
 This repo serves as a playground to test out various Datadog functionalities.
 
