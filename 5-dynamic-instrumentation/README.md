@@ -6,16 +6,10 @@ Please make sure to build the Docker images following the instructions in the pr
 
 ## Source Code
 
-First, set up [Source Code Integration](https://docs.datadoghq.com/integrations/guide/source-code-integration/?tab=github) by adding `git.commit.sha` and `git.repository_url` information when creating the Docker images.
+First, set up [Source Code Integration](https://docs.datadoghq.com/integrations/guide/source-code-integration/?tab=github) by adding `git.commit.sha` and `git.repository_url` information to the `DD_TAGS` in `docker-compose.yaml`
 
 ```shell
-$ cd 5-dynamic-instrumentation
-$ IMAGE=hello-python-with-random-error
-$ docker build --no-cache ../0-app/hello-python-random-error \
-    --tag leopaillier/$IMAGE:1.0 \
-    --label org.opencontainers.image.revision=$(git rev-parse HEAD) \
-    --label org.opencontainers.image.source=github.com/leo-p/datadog-playground
-$ docker push leopaillier/$IMAGE:1.0
+$ export DD_TAGS="git.commit.sha:$(git rev-parse HEAD) git.repository_url:github.com/leo-p/datadog-playground"
 ```
 
 ## Start the apps
