@@ -1,18 +1,20 @@
 # Datadog Admission Controller
 
-This repo is intended to try out the [Datadog Admission Controller](https://docs.datadoghq.com/containers/cluster_agent/admission_controller/) for Datadog Library injection from the agent and other stuff.
+This repo serves as a playground to test out various Datadog functionalities.
 
 ## Applications
 
-It's composed of two applications `hello-node` running with Node.js and `hello-python` running with Python. Traffic to both is balanced when possible.
+It's composed of two applications `hello-node` running with Node.js and `hello-python` running with Python.
 
-## Deployments
+## Use cases
 
-We go through 3 deployments types:
-* Host where the applications and agent are installed directly on the host.
-* Containers where everything is containerized with Docker and deployed through `docker-compose`
-* Containers through `kubernetes` with instrumented applications
-* Containers through `kubernetes` with library injection
+So far you find:
+* `0-app`: Dockerfiles and applications files
+* `1-host`: Applications and agent installed diretly on the host
+* `2-docker-compose`: Applications and agent deployed through `docker-compose`
+* `3-kubernetes`: Applications and agent deployed through `kubernetes`
+* `4-kubernetes-lib-injection`: Applications and agent deployed through `kubernetes` with the particularity that the application have not been instrumented with the tracer which is injected directly through the Datadog Admission Controller.
+* `5-dynamic-instrumentation`: Todo
 
 ## Build the apps
 
