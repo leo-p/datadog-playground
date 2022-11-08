@@ -21,23 +21,12 @@ So far you find:
 The applications are build locally using Docker then made available on the DockerHub registry. You might want to update your username in the following commands.
 
 ```shell
-# Build the node app with tracer
-$ docker build --no-cache --tag hello-node ./0-app/hello-node
-$ docker tag hello-node leopaillier/hello-node:1.0
-$ docker push leopaillier/hello-node:1.0
-
-# Build the node app without tracer
-$ docker build --no-cache --tag hello-node-no-tracer ./0-app/hello-node-no-tracer
-$ docker tag hello-node-no-tracer leopaillier/hello-node-no-tracer:1.0
-$ docker push leopaillier/hello-node-no-tracer:1.0
-
-# Build the python app with tracer
-$ docker build --no-cache --tag hello-python ./0-app/hello-python
-$ docker tag hello-python leopaillier/hello-python:1.0
-$ docker push leopaillier/hello-python:1.0
-
-# Build the python app without tracer
-$ docker build --no-cache --tag hello-python-no-tracer ./0-app/hello-python-no-tracer
-$ docker tag hello-python-no-tracer leopaillier/hello-python-no-tracer:1.0
-$ docker push leopaillier/hello-python-no-tracer:1.0
+# Build all images
+cd docker-playground
+for IMAGE in hello-node hello-node-no-tracer hello-python hello-python-no-tracer
+do
+    docker build --no-cache --tag $IMAGE ./0-app/$IMAGE
+    docker tag $IMAGE leopaillier/$IMAGE:1.0
+    docker push leopaillier/$IMAGE:1.0
+done
 ```
