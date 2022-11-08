@@ -22,11 +22,10 @@ The applications are build locally using Docker then made available on the Docke
 
 ```shell
 # Build all images
-cd docker-playground
-for IMAGE in hello-node hello-node-no-tracer hello-python hello-python-no-tracer
-do
-    docker build --no-cache --tag $IMAGE ./0-app/$IMAGE
-    docker tag $IMAGE leopaillier/$IMAGE:1.0
-    docker push leopaillier/$IMAGE:1.0
-done
+$ cd docker-playground
+$ for IMAGE in hello-node hello-node-no-tracer hello-python hello-python-no-tracer hello-python-random-error
+$ do
+$     docker build --no-cache ./0-app/$IMAGE --tag leopaillier/$IMAGE:1.0
+$     docker push leopaillier/$IMAGE:1.0
+$ done
 ```
