@@ -7,6 +7,6 @@ COPY "requirements.txt" .
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-COPY "app.py" .
+COPY "app-random-error.py" .
 
-CMD [ "python", "app.py" ]
+CMD [ "python", "app-random-error.py" ]
