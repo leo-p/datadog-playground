@@ -1,20 +1,20 @@
 version: "3"
 services:
   hello-python:
-    image: leopaillier/hello-python-with-random-error:1.0
-    command: ddtrace-run python app.py
+    image: leopaillier/hello-python-random-error:1.0
+    command: ddtrace-run python app-random-error.py
     ports:
       - "5000:5000"
     environment:
       - DD_ENV=prod
-      - DD_SERVICE=hello-python-with-random-error
+      - DD_SERVICE=hello-python-random-error
       - DD_VERSION=1.0
       - DD_LOGS_INJECTION=true
       - DD_AGENT_HOST=datadog
       - DD_TAGS
     labels:
       com.datadoghq.tags.env: 'prod'
-      com.datadoghq.tags.service: 'hello-python-with-random-error'
+      com.datadoghq.tags.service: 'hello-python-random-error'
       com.datadoghq.tags.version: '1.0'
     depends_on:
       - datadog
