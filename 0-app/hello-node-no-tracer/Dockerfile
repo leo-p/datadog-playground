@@ -6,6 +6,6 @@ COPY ["package.json", "package-lock.json*", "./"]
 
 RUN npm install
 
-COPY "app.js" .
+COPY "app-no-tracer.js" .
 
-CMD [ "node", "app.js" ]
+CMD [ "node", "app-no-tracer.js" ]
