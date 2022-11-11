@@ -15,6 +15,7 @@ So far you find:
 * `3-kubernetes`: Applications and agent deployed through `kubernetes`
 * `4-kubernetes-lib-injection`: Applications and agent deployed through `kubernetes` with the particularity that the application have not been instrumented with the tracer which is injected directly through the Datadog Admission Controller.
 * `5-dynamic-instrumentation`: Todo
+* `6-universal-service-monitoring`: Use USM to automatically detect services and golden signals without code instrumentation.
 
 ## Build the apps
 
