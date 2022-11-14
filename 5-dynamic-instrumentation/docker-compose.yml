@@ -12,6 +12,7 @@ services:
       - DD_LOGS_INJECTION=true
       - DD_AGENT_HOST=datadog
       - DD_TAGS
+      - DD_DYNAMIC_INSTRUMENTATION_ENABLED=true
     labels:
       com.datadoghq.tags.env: 'prod'
       com.datadoghq.tags.service: 'hello-python-random-error'
@@ -29,6 +30,8 @@ services:
       - DD_PROCESS_AGENT_ENABLED=true
       - DD_TAGS='env:prod'
       - DD_HOSTNAME=dd-docker-compose-host
+      - DD_REMOTE_CONFIGURATION_ENABLED=true
+      - DD_REMOTE_CONFIGURATION_KEY
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /proc/:/host/proc/:ro

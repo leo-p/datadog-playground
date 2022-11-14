@@ -4,7 +4,7 @@
 
 Please make sure to build the Docker images following the instructions in the project README. The images are stored in your public DockerHub so you might need to update your docker profile name.
 
-## Source Code
+## Source Code Integration
 
 First, set up [Source Code Integration](https://docs.datadoghq.com/integrations/guide/source-code-integration/?tab=github) by adding `git.commit.sha` and `git.repository_url` information to the `DD_TAGS` in `docker-compose.yaml`
 
@@ -16,6 +16,7 @@ $ export DD_TAGS="git.commit.sha:$(git rev-parse HEAD) git.repository_url:github
 
 ```shell
 $ export DD_API_KEY=<YOUR_DD_API_KEY>
+$ export DD_REMOTE_CONFIGURATION_KEY=<YOUR_DD_REMOTE_CONFIG_KEY>
 $ docker-compose up -d
 $ docker-compose down -v # teardown
 ```
