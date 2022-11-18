@@ -32,5 +32,17 @@ $ ddtrace-run python3 app.py
 
 Go to the webpage and you should see `Hello from Python!`.
 
+## Start the Java app
+
+Open a new terminal:
+```shell
+$ cd 0-app/hello-java
+$ DD_SERVICE="hello-java"
+$ DD_ENV="prod"
+$ DD_LOGS_INJECTION=true
+$ mvn spring-boot:run
+```
+
+
 ## Check traces
 Go to the Datadog [live traces](https://app.datadoghq.com/apm/traces) page and make sure traces from both your Node.js and Python apps are present.
